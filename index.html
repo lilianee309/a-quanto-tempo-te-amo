@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosso Tempo Juntos ❤️</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#b30000">
+  <style>
+    body {
+      background: #b30000;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+    h1 { font-size: 2.5em; margin-bottom: 20px; z-index: 2; position: relative; }
+    .contador {
+      font-size: 1.8em;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 40px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+      z-index: 2;
+      position: relative;
+    }
+    span { font-weight: bold; color: #ffdddd; }
+    .nomes { margin-top: 20px; font-size: 1.5em; font-weight: bold; color: #ffe6e6; z-index: 2; position: relative; }
+    .heart {
+      position: absolute; top: -20px; font-size: 24px; color: white;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      from { transform: translateY(0) rotate(0deg); opacity: 1; }
+      to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tempo desde que nos conhecemos ❤️</h1>
+  <div class="contador" id="contador"></div>
+  <div class="nomes">💖 [Seu Nome] & [Nome dela] 💖</div>
+  <script>
+    const dataInicio = new Date("2022-08-15T00:00:00"); 
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = agora - dataInicio;
+      const dias = Math.floor(diff / (1000*60*60*24));
+      const horas = Math.floor((diff / (1000*60*60)) % 24);
+      const minutos = Math.floor((diff / (1000*60)) % 60);
+      const segundos = Math.floor((diff/1000) % 60);
+      document.getElementById("contador").innerHTML =
+        `<span>${dias}</span> dias, <span>${horas}</span> horas, <span>${minutos}</span> minutos e <span>${segundos}</span> segundos 💖`;
+    }
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+    function criarCoracao() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤";
+      heart.style.left = Math.random() * 100 + "vw"; 
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 5000);
+    }
+    setInterval(criarCoracao, 500);
+    if ("serviceWorker" in navigator) { navigator.serviceWorker.register("service-worker.js"); }
+  </script>
+</body>
+</html>
